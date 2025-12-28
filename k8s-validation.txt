@@ -1,0 +1,6 @@
+deployment.apps/app-deployment configured (dry run)
+ingress.networking.k8s.io/app-ingress configured (dry run)
+namespace/devsecops configured (dry run)
+networkpolicy.networking.k8s.io/deny-all-ingress created (dry run)
+networkpolicy.networking.k8s.io/allow-app-traffic created (dry run)
+service/app-service configured (dry run)

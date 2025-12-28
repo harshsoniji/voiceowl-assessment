@@ -1,0 +1,143 @@
+
+
+       _               _
+   ___| |__   ___  ___| | _______   __
+  / __| '_ \ / _ \/ __| |/ / _ \ \ / /
+ | (__| | | |  __/ (__|   < (_) \ V /
+  \___|_| |_|\___|\___|_|\_\___/ \_/
+
+By Prisma Cloud | version: 3.2.495 
+Update available 3.2.495 -> 3.2.496
+Run pip3 install -U checkov to update 
+
+
+terraform scan results:
+
+Passed checks: 6, Failed checks: 8, Skipped checks: 0
+
+Check: CKV_AWS_274: "Disallow IAM roles, users, and groups from using the AWS AdministratorAccess policy"
+	PASSED for resource: aws_iam_role.eks_cluster_role
+	File: \main.tf:14-25
+	Guide: [1mhttps://docs.prismacloud.io/en/enterprise-edition/policy-reference/aws-policies/aws-iam-policies/bc-aws-274
+[0mCheck: CKV_AWS_61: "Ensure AWS IAM policy does not allow assume role permission across all services"
+	PASSED for resource: aws_iam_role.eks_cluster_role
+	File: \main.tf:14-25
+	Guide: [1mhttps://docs.prismacloud.io/en/enterprise-edition/policy-reference/aws-policies/aws-iam-policies/bc-aws-iam-45
+[0mCheck: CKV_AWS_60: "Ensure IAM role allows only specific services or principals to assume it"
+	PASSED for resource: aws_iam_role.eks_cluster_role
+	File: \main.tf:14-25
+	Guide: [1mhttps://docs.prismacloud.io/en/enterprise-edition/policy-reference/aws-policies/aws-iam-policies/bc-aws-iam-44
+[0mCheck: CKV_AWS_339: "Ensure EKS clusters run on a supported Kubernetes version"
+	PASSED for resource: aws_eks_cluster.this
+	File: \main.tf:27-34
+	Guide: [1mhttps://docs.prismacloud.io/en/enterprise-edition/policy-reference/aws-policies/aws-kubernetes-policies/bc-aws-339
+[0mCheck: CKV_AWS_41: "Ensure no hard coded AWS access key and secret key exists in provider"
+	PASSED for resource: aws.default
+	File: \versions.tf:11-13
+	Guide: [1mhttps://docs.prismacloud.io/en/enterprise-edition/policy-reference/aws-policies/secrets-policies/bc-aws-secrets-5
+[0mCheck: CKV2_AWS_56: "Ensure AWS Managed IAMFullAccess IAM policy is not used."
+	PASSED for resource: aws_iam_role.eks_cluster_role
+	File: \main.tf:14-25
+	Guide: [1mhttps://docs.prismacloud.io/en/enterprise-edition/policy-reference/aws-policies/aws-iam-policies/bc-aws-2-56
+[0mCheck: CKV_AWS_130: "Ensure VPC subnets do not assign public IP by default"
+	FAILED for resource: aws_subnet.eks_public[0]
+	File: \main.tf:7-12
+	Guide: [1mhttps://docs.prismacloud.io/en/enterprise-edition/policy-reference/aws-policies/aws-networking-policies/ensure-vpc-subnets-do-not-assign-public-ip-by-default
+[0m
+		[37m7  | [33mresource "aws_subnet" "eks_public" {
+		[37m8  | [33m  count                   = 2
+		[37m9  | [33m  vpc_id                  = aws_vpc.eks_vpc.id
+		[37m10 | [33m  cidr_block              = cidrsubnet(aws_vpc.eks_vpc.cidr_block, 8, count.index)
+		[37m11 | [33m  map_public_ip_on_launch = true
+		[37m12 | [33m}
+
+Check: CKV_AWS_37: "Ensure Amazon EKS control plane logging is enabled for all log types"
+	FAILED for resource: aws_eks_cluster.this
+	File: \main.tf:27-34
+	Guide: [1mhttps://docs.prismacloud.io/en/enterprise-edition/policy-reference/aws-policies/aws-kubernetes-policies/bc-aws-kubernetes-4
+[0m
+		[37m27 | [33mresource "aws_eks_cluster" "this" {
+		[37m28 | [33m  name     = "demo-eks"
+		[37m29 | [33m  role_arn = aws_iam_role.eks_cluster_role.arn
+		[37m30 | [33m
+		[37m31 | [33m  vpc_config {
+		[37m32 | [33m    subnet_ids = aws_subnet.eks_public[*].id
+		[37m33 | [33m  }
+		[37m34 | [33m}
+
+Check: CKV_AWS_39: "Ensure Amazon EKS public endpoint disabled"
+	FAILED for resource: aws_eks_cluster.this
+	File: \main.tf:27-34
+	Guide: [1mhttps://docs.prismacloud.io/en/enterprise-edition/policy-reference/aws-policies/aws-kubernetes-policies/bc-aws-kubernetes-2
+[0m
+		[37m27 | [33mresource "aws_eks_cluster" "this" {
+		[37m28 | [33m  name     = "demo-eks"
+		[37m29 | [33m  role_arn = aws_iam_role.eks_cluster_role.arn
+		[37m30 | [33m
+		[37m31 | [33m  vpc_config {
+		[37m32 | [33m    subnet_ids = aws_subnet.eks_public[*].id
+		[37m33 | [33m  }
+		[37m34 | [33m}
+
+Check: CKV_AWS_38: "Ensure Amazon EKS public endpoint not accessible to 0.0.0.0/0"
+	FAILED for resource: aws_eks_cluster.this
+	File: \main.tf:27-34
+	Guide: [1mhttps://docs.prismacloud.io/en/enterprise-edition/policy-reference/aws-policies/aws-kubernetes-policies/bc-aws-kubernetes-1
+[0m
+		[37m27 | [33mresource "aws_eks_cluster" "this" {
+		[37m28 | [33m  name     = "demo-eks"
+		[37m29 | [33m  role_arn = aws_iam_role.eks_cluster_role.arn
+		[37m30 | [33m
+		[37m31 | [33m  vpc_config {
+		[37m32 | [33m    subnet_ids = aws_subnet.eks_public[*].id
+		[37m33 | [33m  }
+		[37m34 | [33m}
+
+Check: CKV_AWS_58: "Ensure EKS Cluster has Secrets Encryption Enabled"
+	FAILED for resource: aws_eks_cluster.this
+	File: \main.tf:27-34
+	Guide: [1mhttps://docs.prismacloud.io/en/enterprise-edition/policy-reference/aws-policies/aws-kubernetes-policies/bc-aws-kubernetes-3
+[0m
+		[37m27 | [33mresource "aws_eks_cluster" "this" {
+		[37m28 | [33m  name     = "demo-eks"
+		[37m29 | [33m  role_arn = aws_iam_role.eks_cluster_role.arn
+		[37m30 | [33m
+		[37m31 | [33m  vpc_config {
+		[37m32 | [33m    subnet_ids = aws_subnet.eks_public[*].id
+		[37m33 | [33m  }
+		[37m34 | [33m}
+
+Check: CKV_AWS_130: "Ensure VPC subnets do not assign public IP by default"
+	FAILED for resource: aws_subnet.eks_public[1]
+	File: \main.tf:7-12
+	Guide: [1mhttps://docs.prismacloud.io/en/enterprise-edition/policy-reference/aws-policies/aws-networking-policies/ensure-vpc-subnets-do-not-assign-public-ip-by-default
+[0m
+		[37m7  | [33mresource "aws_subnet" "eks_public" {
+		[37m8  | [33m  count                   = 2
+		[37m9  | [33m  vpc_id                  = aws_vpc.eks_vpc.id
+		[37m10 | [33m  cidr_block              = cidrsubnet(aws_vpc.eks_vpc.cidr_block, 8, count.index)
+		[37m11 | [33m  map_public_ip_on_launch = true
+		[37m12 | [33m}
+
+Check: CKV2_AWS_11: "Ensure VPC flow logging is enabled in all VPCs"
+	FAILED for resource: aws_vpc.eks_vpc
+	File: \main.tf:1-5
+	Guide: [1mhttps://docs.prismacloud.io/en/enterprise-edition/policy-reference/aws-policies/aws-logging-policies/logging-9-enable-vpc-flow-logging
+[0m
+		[37m1 | [33mresource "aws_vpc" "eks_vpc" {
+		[37m2 | [33m  cidr_block           = "10.0.0.0/16"
+		[37m3 | [33m  enable_dns_hostnames = true
+		[37m4 | [33m  enable_dns_support   = true
+		[37m5 | [33m}
+
+Check: CKV2_AWS_12: "Ensure the default security group of every VPC restricts all traffic"
+	FAILED for resource: aws_vpc.eks_vpc
+	File: \main.tf:1-5
+	Guide: [1mhttps://docs.prismacloud.io/en/enterprise-edition/policy-reference/aws-policies/aws-networking-policies/networking-4
+[0m
+		[37m1 | [33mresource "aws_vpc" "eks_vpc" {
+		[37m2 | [33m  cidr_block           = "10.0.0.0/16"
+		[37m3 | [33m  enable_dns_hostnames = true
+		[37m4 | [33m  enable_dns_support   = true
+		[37m5 | [33m}
+
