@@ -5,7 +5,7 @@ const port = process.env.PORT || 3000;
 app.get("/", (req, res) => {
   res.json({ 
     status: "ok",
-    message: "Hey! Voiceowl Assessment Accomplished. v2.0"
+    message: "Hey! Voiceowl Assessment Accomplished :). v2.0"
   });
 });
 
