@@ -30,7 +30,7 @@ k8s-validation.txt
 monitoring/prometheus.yaml (pod restarts + CPU alerts)
 
 
-### ✅ **Task 6: Report**
+###  **Task 6: Report**
 `Report.md` - Risks, hardening, production gaps
 
 ---
@@ -53,7 +53,7 @@ kubectl apply -f k8s/ -R
 kubectl get pods -n voiceowl
 minikube service app-service -n voiceowl --url
 
-## 🔧 CI/CD Pipeline Flow
+##  CI/CD Pipeline Flow
 
 git push → GitHub Actions → Semgrep → Docker Build → Trivy Scan → [FAIL on HIGH]
 ↓ (if clean)
@@ -64,7 +64,7 @@ Kubernetes Deploy
 
 ---
 
-## 🛡️ Security Hardening Summary
+##  Security Hardening Summary
 
 | Component | Hardening Applied |
 |-----------|-------------------|
@@ -75,7 +75,7 @@ Kubernetes Deploy
 
 ---
 
-## 📊 Verification Commands
+##  Verification Commands
 
 Security scans
 npm audit # 0 vulnerabilities

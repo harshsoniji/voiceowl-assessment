@@ -53,7 +53,7 @@ Namespace isolation (devsecops namespace)
 Deliverables: k8s/*.yaml + k8s-validation.txt 
 
 
-### ✅ **Task 5: Observability**
+###  **Task 5: Observability**
 Prometheus deployment + service
 Alert rules: pod restarts (>3), high CPU (>50%)
 Scrape config for app-service
