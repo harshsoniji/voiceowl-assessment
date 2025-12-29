@@ -1,4 +1,4 @@
-#  Voiceowl DevSecOps Assessment - COMPLETE
+#  Voiceowl DevSecOps Assessment
 
 **Full end-to-end DevSecOps pipeline: Docker → CI/CD → Kubernetes → Monitoring**
 
@@ -14,7 +14,6 @@
 - GitHub Actions: `.github/workflows/ci.yml`
 - Semgrep SAST (OWASP Top 10)
 - Trivy container scan **fails on HIGH/CRITICAL**
-- [Pipeline runs → Actions tab](https://github.com/harshsoniji/voiceowl-devsecops-complete/actions)
 
 ###  **Task 4: Kubernetes Hardening**
 
@@ -42,16 +41,16 @@ npm install
 npm start # http://localhost:3000
 
 Docker + Security
-docker build -t voiceowl-app .
-trivy image voiceowl-app # See trivy.txt
+docker build -t devsecops-app .
+trivy image devsecops-app # See trivy.txt
 
 Kubernetes (Minikube)
 minikube start --driver=docker
 & minikube docker-env | Invoke-Expression
-docker build -t voiceowl-app .
+docker build -t devsecops-app .
 kubectl apply -f k8s/ -R
-kubectl get pods -n voiceowl
-minikube service app-service -n voiceowl --url
+kubectl get pods -n devsecops
+minikube service app-service -n devsecops --url
 
 ##  CI/CD Pipeline Flow
 
@@ -79,13 +78,13 @@ Kubernetes Deploy
 
 Security scans
 npm audit # 0 vulnerabilities
-docker build -t voiceowl-app . # Builds clean
-trivy image voiceowl-app # Clean results
-kubectl apply --dry-run=client -f k8s/ -R # Valid manifests
+docker build -t devsecops-app . 
+trivy image devsecops-app 
+kubectl apply --dry-run=client -f k8s/ -R
 
 Demo
-kubectl get all -n voiceowl # All resources healthy
-minikube service app-service -n voiceowl --url # App accessible
+kubectl get all -n devsecops # All resources healthy
+minikube service app-service -n devsecops --url # App accessible
 
 
 
